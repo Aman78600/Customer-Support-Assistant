@@ -3,7 +3,8 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
-
+from dotenv import load_dotenv
+import os
 
 embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
@@ -11,10 +12,17 @@ embeddings = HuggingFaceEmbeddings(
         encode_kwargs={'normalize_embeddings': True}
     )
 
+# Load environment variables from the .env file
+load_dotenv()
+
+# Access the API key
+api_key = os.getenv("GEMINI_API_KEY")
+
+# Use the API key in the Gemini AI initialization
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-pro",
     temperature=0.1,
-    api_key="AIzaSyCjEfE7uI88kJJifIzP66la4MPgO6h9TnE"
+    api_key=api_key
 )
 
 def ask_question(query: str, customer_context: str = None) -> str:
