@@ -2,12 +2,10 @@ Flask==2.3.3
 requests==2.31.0
 langchain==0.0.318
 sentence-transformers
-# Gunicorn
-# protobuf
-PyPDF2==3
+Gunicorn
+protobuf
 python-docx
 faiss-cpu
 transformers
-# langchain-groq
-# grpcio
-# langchain-groq
+grpcio
+langchain-google-genai
