@@ -6,12 +6,6 @@ from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 import os
 
-embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
-        model_kwargs={'device': 'cpu'},
-        encode_kwargs={'normalize_embeddings': True}
-    )
-
 # Load environment variables from the .env file
 load_dotenv()
 
@@ -24,6 +18,12 @@ llm = ChatGoogleGenerativeAI(
     temperature=0.1,
     api_key=api_key
 )
+
+embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        model_kwargs={'device': 'cpu'},
+        encode_kwargs={'normalize_embeddings': True}
+    )
 
 def ask_question(query: str, customer_context: str = None) -> str:
     """Get response from Gemini API"""
