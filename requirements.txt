@@ -9,3 +9,4 @@ faiss-cpu
 transformers
 grpcio
 langchain-google-genai
+python-dotenv
