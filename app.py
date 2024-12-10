@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
-from langchain_google_genai import ChatGoogleGenerativeAI
+import google.generativeai as genai
 from langchain.prompts import PromptTemplate
 import os
 
@@ -12,12 +12,8 @@ api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
     raise EnvironmentError("Missing `GOOGLE_API_KEY` environment variable. Please set it in the environment.")
 
-# Use the API key in your initialization
-llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-pro",
-    temperature=0.1,
-    api_key=api_key
-)
+genai.configure(api_key=api_key)
+llm = genai.GenerativeModel("gemini-1.5-flash")
 
 embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
@@ -48,7 +44,7 @@ def ask_question(query: str, customer_context: str = None) -> str:
             input_variables=["customer_context", "question"]
         )
 
-    response = llm.predict(prompt.format(customer_context=customer_context, question=query))
+    response = llm.generate_content(prompt.format(airline_context=airline_context, question=query)).text
 
     
     return response
