@@ -8,5 +8,5 @@ python-docx
 faiss-cpu
 transformers
 grpcio
-langchain-google-genai
+google-generativeai
 
